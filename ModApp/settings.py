@@ -34,7 +34,7 @@ CSRF_TRUSTED_ORIGINS = [
 SECRET_KEY = config("SECRET_KEY")
 ORANGE_MONEY_RECEIVER = config("ORANGE_MONEY_RECEIVER")
 ORANGE_MONEY_MIN_MONTANT = config("ORANGE_MONEY_MIN_MONTANT", cast=int)
-ORANGE_MONEY_API_KEY = config("ORANGE_MONEY_API_KEY")
+ORANGE_MONEY_API_KEY = config("ORANGE_MONEY_API_KEY", default="")
 
 
 # ============================================================
