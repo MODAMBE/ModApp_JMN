@@ -1,0 +1,27 @@
+# Core Django
+Django==4.2.16
+asgiref==3.7.2
+sqlparse==0.5.3
+
+# Database
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# Environment variables (.env)
+python-decouple==3.8
+
+# Notifications Firebase
+pyfcm==1.5.4
+
+# HTTP Requests
+requests==2.31.0
+
+# Production server (Render)
+gunicorn==21.2.0
+
+# Static files
+whitenoise==6.6.0
+django-extensions==3.2.3
+
+channels==4.0.0
+daphne==4.0.0

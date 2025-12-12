@@ -1,0 +1,25 @@
+# Environnements virtuels
+venv/
+venv_modapp/
+env/
+.env
+
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# Build et distributions
+build/
+dist/
+*.spec
+
+# Clés et certificats
+*.crt
+*.key
+
+# IDE
+.vscode/
+.idea/
