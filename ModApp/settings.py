@@ -29,13 +29,16 @@ ALLOWED_HOSTS = config(
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com"  # Permet tous les sous-domaines Render dynamiques
 ]
-
-# 🔑 Exemple pour les autres variables sensibles
+# Variables existantes
 SECRET_KEY = config("SECRET_KEY")
 ORANGE_MONEY_RECEIVER = config("ORANGE_MONEY_RECEIVER")
 ORANGE_MONEY_MIN_MONTANT = config("ORANGE_MONEY_MIN_MONTANT", cast=int)
 ORANGE_MONEY_API_KEY = config("ORANGE_MONEY_API_KEY", default="")
 
+# Variables publicitaires
+ADSENSE_CLIENT_ID = config("ADSENSE_CLIENT_ID", default="")
+ADMOB_APP_ID = config("ADMOB_APP_ID", default="")
+META_AUDIENCE_PLACEMENT_ID = config("META_AUDIENCE_PLACEMENT_ID", default="")
 
 # ============================================================
 # APPLICATIONS
@@ -98,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'eglise.context_processors.adsense',
             ],
         },
     },
