@@ -21,7 +21,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)  # False par défaut en prod
 # 🌐 Hôtes autorisés — supporte tous les sous-domaines Render
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="*",  # Permet tous les hôtes dynamiques Render
+    default=".onrender.com",  # Permet tous les hôtes dynamiques Render
     cast=lambda v: [s.strip() for s in v.split(",")]
 )
 
@@ -139,24 +139,28 @@ TIME_ZONE = 'Africa/Kinshasa'
 USE_I18N = True
 USE_TZ = True
 
-
 # ============================================================
 # STATIC & MEDIA
 # ============================================================
 
+# URL pour accéder aux fichiers statiques
 STATIC_URL = '/static/'
 
+# Dossiers sources des fichiers statiques (non collectés)
 STATICFILES_DIRS = [
-    
-    BASE_DIR / "eglise" / "static",
+    BASE_DIR / "eglise" / "static",  # ton dossier source principal
 ]
 
+# Dossier où collectstatic va copier tous les fichiers statiques
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Utilisation de Whitenoise pour servir les fichiers statiques en production
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# === MEDIA ===
+# URL pour accéder aux fichiers médias (uploads)
 MEDIA_URL = '/media/'
+
+# Dossier où seront stockés les fichiers médias
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Permet d'afficher les médias en local
