@@ -25,10 +25,27 @@ ALLOWED_HOSTS = config(
     cast=lambda v: [s.strip() for s in v.split(",")]
 )
 
+# Assurer des valeurs utiles si la variable d'environnement n'est pas définie
+if not ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]
+else:
+    # garantir localhost pour le développement local
+    for _h in ("localhost", "127.0.0.1"):
+        if _h not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.insert(0, _h)
+
+# Si Render fournit le nom d'hôte externe, l'ajouter automatiquement
+_render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME") or os.environ.get("RENDER_EXTERNAL_URL")
+if _render_host:
+    _render_host = _render_host.replace("https://", "").replace("http://", "").split("/")[0]
+    if _render_host and _render_host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_render_host)
+
 # 🔒 CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com"  # Permet tous les sous-domaines Render dynamiques
 ]
+
 # Variables existantes
 ORANGE_MONEY_RECEIVER = config("ORANGE_MONEY_RECEIVER")
 ORANGE_MONEY_MIN_MONTANT = config("ORANGE_MONEY_MIN_MONTANT", cast=int)
@@ -152,6 +169,13 @@ STATICFILES_DIRS = [
 
 # Dossier où collectstatic va copier tous les fichiers statiques
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Créer STATIC_ROOT au démarrage si nécessaire pour éviter l'avertissement
+try:
+    STATIC_ROOT.mkdir(parents=True, exist_ok=True)
+except Exception:
+    # si échec, on ne casse pas l'application — collectstatic devrait toujours être exécuté lors du build
+    pass
 
 # Utilisation de Whitenoise pour servir les fichiers statiques en production
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
